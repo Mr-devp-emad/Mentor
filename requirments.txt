@@ -1,6 +1,2 @@
 streamlit
-io
-sys
-base64
-generativeai
-google
+google-generativeai
