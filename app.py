@@ -5,8 +5,9 @@ import base64
 import google.generativeai as genai
 
 # Configure Gemini API
-genai.configure(api_key="AIzaSyA2w5xa573pBt1euAR5Hpk2ma6R_oVFAQ8")
+genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])  # Streamlit secrets se API key le raha hai
 
+# AI Response Function
 def get_ai_response(question):
     try:
         client = genai.GenerativeModel("gemini-2.0-flash")
@@ -15,6 +16,7 @@ def get_ai_response(question):
     except Exception as e:
         return f"Error: {str(e)}"
 
+# Python Code Execution
 def execute_python_code(code):
     try:
         output_capture = io.StringIO()
@@ -25,13 +27,11 @@ def execute_python_code(code):
     except Exception as e:
         return f"Error: {str(e)}"
 
-# Function to create an HTML preview for HTML & CSS
+# HTML & CSS Preview
 def create_html_preview(html_code, css_code=""):
     full_code = f"""
     <html>
-    <head>
-        <style>{css_code}</style>
-    </head>
+    <head><style>{css_code}</style></head>
     <body>{html_code}</body>
     </html>
     """
@@ -40,20 +40,24 @@ def create_html_preview(html_code, css_code=""):
 # Streamlit Page Config
 st.set_page_config(page_title="Coding Mentor", page_icon="💻", layout="wide")
 
+# Custom Styling
 st.markdown("""
     <style>
-        body { font-family: 'Arial', sans-serif; background-color: #181818; }
+        body { font-family: 'Arial', sans-serif; background-color: #121212; }
         .stTextArea, .stButton { border-radius: 8px; }
-        .stButton > button { background-color: #4CAF50; color: white; border-radius: 8px; width: 100%; font-size: 16px; padding: 10px; }
+        .stButton > button { background-color: #4CAF50; color: white; border-radius: 8px; font-size: 16px; padding: 10px; }
         .stButton > button:hover { background-color: #45a049; }
         .stCodeBlock { border-radius: 8px; padding: 10px; }
+        iframe { border: 2px solid #333; border-radius: 8px; }
     </style>
     """, unsafe_allow_html=True)
 
 st.title("👨‍💻 Coding Mentor - Learn & Practice")
 
+# Language Selection
 language = st.sidebar.selectbox("📌 Choose Language", ["Python", "JavaScript", "TypeScript", "HTML", "CSS"])
 
+# AI Chat Section
 st.subheader(f"🔍 Ask Anything About {language}")
 query = st.text_area("Type your question...")
 if st.button("Get Explanation"):
@@ -62,8 +66,8 @@ if st.button("Get Explanation"):
     else:
         st.warning("Please enter a question.")
 
+# Code Playground Layout
 st.subheader("🛠️ Code Playground")
-
 col1, col2, col3 = st.columns([1, 1.2, 1])
 
 with col1:
@@ -107,4 +111,4 @@ with col3:
             st.markdown(f'<iframe src="{html_preview}" width="100%" height="300"></iframe>', unsafe_allow_html=True)
 
 st.markdown("---")
-st.markdown("🚀Idea By Emad Ahmed Created With The Help Of Gpt/ Self-learning and Streamlit | [GitHub](https://github.com/Mr-devp-emad/)")
+st.markdown("🚀 Idea By Emad Ahmed | Created With ❤️ Using Streamlit | [GitHub](https://github.com/Mr-devp-emad/)")
