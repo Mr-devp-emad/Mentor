@@ -2,7 +2,7 @@ import streamlit as st
 import io
 import sys
 import base64
-from google import generativeai as genai
+import google.generativeai as genai
 
 # Configure Gemini API
 genai.configure(api_key="AIzaSyA2w5xa573pBt1euAR5Hpk2ma6R_oVFAQ8")
